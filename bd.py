@@ -111,7 +111,7 @@ class PermissionDatabase:
         connection, cursor = self._connect()
 
         select_query = """
-            SELECT user_id, position FROM users WHERE is_admin=False;
+            SELECT user_id, position, name FROM users WHERE is_admin=False;
         """
         try:
             cursor.execute(select_query, )

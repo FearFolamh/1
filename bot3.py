@@ -201,6 +201,12 @@ def configure_admin_rights(update: Update, context: CallbackContext):
     for user_id, role in users:
         set_admin_rights(update, context, user_id, role)
 
+def handle_info_about_users(update: Update, context: CallbackContext):
+    users = db.get_all_users()
+    text = [f"Все пользователи и их ники в гусях:\n"]
+    for user_id, role, name in users:
+        text.append(f"{name} - {role}")
+    update.message.reply_text(f"{text}", parse_mode="HTML")
 
 def handle_message(update, context):
     user = update.message.from_user
@@ -229,6 +235,7 @@ def main():
         CommandHandler("save_all_users_roles", get_all_users_id))
     dispatcher.add_handler(
         CommandHandler("configure_admin_rights", configure_admin_rights))
+    dispatcher.add_handler(CommandHandler('info', handle_info_about_users))
     dispatcher.add_handler(CommandHandler("role", assign_role))
     global GROUP_ID
     GROUP_ID = db.get_group_id()
