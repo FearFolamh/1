@@ -3,8 +3,8 @@ from psycopg2.sql import NULL
 
 host = "pg-281be636-ira-c799.b.aivencloud.com"  # Адрес хоста
 database = "permission_bot"  # Название бд
-user = "avnadmin"  # Юзер
-password = "AVNS_8FYXXRmJKMIdVInjzQ7"  # Пароль
+user = ""  # Юзер
+password = ""  # Пароль
 port = 14382
 
 
