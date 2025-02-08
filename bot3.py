@@ -7,7 +7,7 @@ from bd import PermissionDatabase
 from telegram.error import BadRequest
 import json
 import asyncio
-from background import keep_alive
+
 
 #pip.main(['install', 'python-telegram-bot'])
 #import telebot  # Moved import to the top of the file
