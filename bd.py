@@ -6,7 +6,7 @@ database = "permission_bot"  # Название бд
 user = ""  # Юзер
 password = ""  # Пароль
 port = 14382
-
+BRANCH_ID = 2  # 1 - main, 2 - bot_dev
 
 class PermissionDatabase:
 
@@ -36,7 +36,7 @@ class PermissionDatabase:
         insert_query = """
             UPDATE public.config SET welcome_thread_id=%s WHERE id=%s;
         """
-        data_to_insert = (thread_id, 1)
+        data_to_insert = (thread_id, BRANCH_ID)
         try:
             cursor.execute(insert_query, data_to_insert)
             connection.commit()
@@ -53,7 +53,7 @@ class PermissionDatabase:
         insert_query = """
             UPDATE public.config SET chat_id=%s WHERE id=%s;
         """
-        data_to_insert = (chat_id, 1)
+        data_to_insert = (chat_id, BRANCH_ID)
         try:
             cursor.execute(insert_query, data_to_insert)
             connection.commit()
@@ -69,7 +69,7 @@ class PermissionDatabase:
         select_query = """
             SELECT welcome_thread_id FROM config WHERE id=%s;
         """
-        data_to_select = (1, )
+        data_to_select = (BRANCH_ID, )
         try:
             cursor.execute(select_query, data_to_select)
             result = cursor.fetchone()
@@ -93,7 +93,7 @@ class PermissionDatabase:
         select_query = """
             SELECT chat_id FROM config WHERE id=%s;
         """
-        data_to_select = (1, )
+        data_to_select = (BRANCH_ID, )
         try:
             cursor.execute(select_query, data_to_select)
             chat_id = cursor.fetchone()

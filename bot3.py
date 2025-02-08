@@ -235,7 +235,7 @@ def main():
         CommandHandler("save_all_users_roles", get_all_users_id))
     dispatcher.add_handler(
         CommandHandler("configure_admin_rights", configure_admin_rights))
-    dispatcher.add_handler(CommandHandler('info', handle_info_about_users))
+    dispatcher.add_handler(CommandHandler("info", handle_info_about_users))
     dispatcher.add_handler(CommandHandler("role", assign_role))
     global GROUP_ID
     GROUP_ID = db.get_group_id()
