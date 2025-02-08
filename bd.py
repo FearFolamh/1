@@ -3,8 +3,8 @@ from psycopg2.sql import NULL
 
 host = "pg-281be636-ira-c799.b.aivencloud.com"  # Адрес хоста
 database = "permission_bot"  # Название бд
-user = "avnadmin"  # Юзер
-password = "AVNS_8FYXXRmJKMIdVInjzQ7"  # Пароль
+user = ""  # Юзер
+password = ""  # Пароль
 port = 14382
 
 
@@ -79,11 +79,6 @@ class PermissionDatabase:
             thread_id = result[0]
             print(f"Welcome_thread_id was fetched from BD: {thread_id}")
             return thread_id
-
-            #cursor.execute(select_query, data_to_select)
-            #thread_id = cursor.fetchone()[0]
-            #print(f"Welcome_thread_id was fetched from BD. {thread_id}")
-
         except Exception as e:
             print(
                 f"Exception due to executing get_welcome_thread_message: {e}")
