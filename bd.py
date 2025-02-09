@@ -1,11 +1,18 @@
 import psycopg2
 from psycopg2.sql import NULL
+import os
+from dotenv import load_dotenv
 
-host = "pg-281be636-ira-c799.b.aivencloud.com"  # Адрес хоста
-database = "permission_bot"  # Название бд
-user = ""  # Юзер
-password = ""  # Пароль
-port = 14382
+# Загружаем переменные окружения из .env
+load_dotenv()
+
+# Читаем переменные
+host = os.getenv("HOST")
+database = os.getenv("DATABASE")
+user = os.getenv("USER")
+password = os.getenv("PASSWORD")
+port = int(os.getenv("PORT"))
+
 BRANCH_ID = 2  # 1 - main, 2 - bot_dev
 
 class PermissionDatabase:

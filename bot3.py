@@ -4,18 +4,19 @@ import pip
 from telegram import Update, ChatAdministratorRights, ChatPermissions
 from telegram.ext import Updater, MessageHandler, Filters, CallbackContext, CommandHandler
 from bd import PermissionDatabase
-from telegram.error import BadRequest
+# from telegram.error import BadRequest
 import json
 import asyncio
-
-
 #pip.main(['install', 'python-telegram-bot'])
 #import telebot  # Moved import to the top of the file
 
-BOT_TOKEN = '7585696521:AAESIUWXERzzFaCS3gNaF-xtuAaJCD42BaY'
-TARGET_USER_ID = 347884248
-GROUP_ID_FILE = 'group_ids.txt'
-USER_ID_FILE = 'user_ids.txt'
+from dotenv import load_dotenv
+
+# Загружаем переменные окружения из .env
+load_dotenv()
+
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+TARGET_USER_ID = os.getenv("TARGET_USER_ID")
 GROUP_ID = 0
 
 db = PermissionDatabase()
@@ -27,16 +28,6 @@ def save_group_id(group_id: int):
     global GROUP_ID
     db.set_group_id(group_id)
     GROUP_ID = group_id
-    # if os.path.exists(GROUP_ID_FILE):
-    #     with open(GROUP_ID_FILE, 'r') as f:
-    #         group_ids = f.readlines()
-    # else:
-    #     group_ids = []
-    # group_ids = [id.strip() for id in group_ids]
-    # if str(group_id) not in group_ids:
-    #     group_ids.append(str(group_id))
-    #     with open(GROUP_ID_FILE, 'a') as f:
-    #         f.write(f"{group_id}\n")
 
 
 def save_user_id(members: list):
@@ -201,11 +192,18 @@ def configure_admin_rights(update: Update, context: CallbackContext):
     for user_id, role in users:
         set_admin_rights(update, context, user_id, role)
 
+def get_time():
+    timestamp = update.message.date
+    current_utc_time = datetime.now(pytz.utc)
+    offset = current_utc_time - timestamp.replace(tzinfo=pytz.utc)
+    offset_hours = offset.total_seconds() / 3600
+    return timestamp, offset_hours
+
 def handle_info_about_users(update: Update, context: CallbackContext):
     users = db.get_all_users()
     text = [f"Все пользователи и их ники в гусях:\n"]
     for user_id, role, name in users:
-        text.append(f"{name} - {role}")
+        text.append(f"{name} - {role}\n")
     update.message.reply_text(f"{text}", parse_mode="HTML")
 
 def handle_message(update, context):
@@ -241,7 +239,7 @@ def main():
     GROUP_ID = db.get_group_id()
     updater.start_polling()
     updater.idle()
-    keep_alive()
+    # keep_alive()
 
 
 if __name__ == '__main__':
