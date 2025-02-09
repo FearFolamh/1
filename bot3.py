@@ -192,12 +192,6 @@ def configure_admin_rights(update: Update, context: CallbackContext):
     for user_id, role in users:
         set_admin_rights(update, context, user_id, role)
 
-def get_time():
-    timestamp = update.message.date
-    current_utc_time = datetime.now(pytz.utc)
-    offset = current_utc_time - timestamp.replace(tzinfo=pytz.utc)
-    offset_hours = offset.total_seconds() / 3600
-    return timestamp, offset_hours
 
 def handle_info_about_users(update: Update, context: CallbackContext):
     users = db.get_all_users()
